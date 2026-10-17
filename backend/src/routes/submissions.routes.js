@@ -3,7 +3,6 @@ const router = express.Router();
 const prisma = require('../lib/prisma');
 const { authMiddleware, adminOnly } = require('../middlewares/auth');
 
-// GET /api/submissions — listar todas as submissões (admin only)
 router.get('/', authMiddleware, adminOnly, async (req, res) => {
   try {
     const submissions = await prisma.submission.findMany({
@@ -17,7 +16,6 @@ router.get('/', authMiddleware, adminOnly, async (req, res) => {
   }
 });
 
-// POST /api/submissions — enviar submissão (público, sem autenticação)
 router.post('/', async (req, res) => {
   const {
     gameTitle,
@@ -36,7 +34,6 @@ router.post('/', async (req, res) => {
     attachmentUrl,
   } = req.body;
 
-  // Validação dos campos obrigatórios
   if (!gameTitle || !description || !contactEmail) {
     return res.status(400).json({ error: 'Campos obrigatórios ausentes: gameTitle, description, contactEmail' });
   }
@@ -71,7 +68,6 @@ router.post('/', async (req, res) => {
   }
 });
 
-// PATCH /api/submissions/:id/status — aprovar ou rejeitar submissão (admin only)
 router.patch('/:id/status', authMiddleware, adminOnly, async (req, res) => {
   const { status } = req.body;
 
@@ -95,7 +91,6 @@ router.patch('/:id/status', authMiddleware, adminOnly, async (req, res) => {
   }
 });
 
-// DELETE /api/submissions/:id — deletar submissão (admin only)
 router.delete('/:id', authMiddleware, adminOnly, async (req, res) => {
   try {
     await prisma.submission.delete({
