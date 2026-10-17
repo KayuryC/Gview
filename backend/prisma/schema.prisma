@@ -60,6 +60,7 @@ model Wishlist {
   game      Game     @relation(fields: [gameId], references: [id], onDelete: Cascade)
 
   @@unique([userId, gameId])
+  @@index([gameId])
 }
 
 model Review {
@@ -127,4 +128,5 @@ model GameJamEntry {
   developer    User     @relation(fields: [developerId], references: [id], onDelete: Cascade)
 
   @@unique([jamId, gameId])
+  @@index([gameId])
 }
