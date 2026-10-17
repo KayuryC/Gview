@@ -46,6 +46,8 @@ model Game {
   wishlist         Wishlist[]
   reviews          Review[]
   jamEntries       GameJamEntry[]
+
+  @@index([status, createdAt])
 }
 
 model Wishlist {
