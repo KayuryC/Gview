@@ -73,6 +73,7 @@ model Review {
   game      Game     @relation(fields: [gameId], references: [id], onDelete: Cascade)
 
   @@unique([userId, gameId])
+  @@index([gameId, createdAt])
 }
 
 model Submission {
