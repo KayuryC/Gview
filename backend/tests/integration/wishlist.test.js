@@ -88,4 +88,25 @@ describe('Wishlist API Integration', () => {
     expect(checkRes.status).toBe(200);
     expect(checkRes.body).toEqual({ inWishlist: false });
   });
+
+  it('GET /api/wishlist/:userId deve listar a wishlist ordenada por createdAt desc', async () => {
+    await request(app)
+      .post('/api/wishlist')
+      .set('Authorization', `Bearer ${token}`)
+      .send({ gameId: testGame.id });
+
+    const res = await request(app)
+      .get(`/api/wishlist/${testUser.id}`)
+      .set('Authorization', `Bearer ${token}`);
+
+    expect(res.status).toBe(200);
+    expect(res.body).toHaveProperty('data');
+    expect(Array.isArray(res.body.data)).toBe(true);
+    expect(res.body.data.length).toBeGreaterThan(0);
+    expect(res.body.data[0].gameId).toBe(testGame.id);
+
+    await request(app)
+      .delete(`/api/wishlist/${testGame.id}`)
+      .set('Authorization', `Bearer ${token}`);
+  });
 });

@@ -61,6 +61,7 @@ model Wishlist {
 
   @@unique([userId, gameId])
   @@index([gameId])
+  @@index([userId, createdAt])
 }
 
 model Review {
