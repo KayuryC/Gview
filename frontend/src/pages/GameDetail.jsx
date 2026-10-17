@@ -28,19 +28,16 @@ export default function GameDetail() {
       .finally(() => setLoading(false))
   }, [slug])
 
-  // Check wishlist status
   useEffect(() => {
     if (!user || !game) return
-    apiFetch(`/api/wishlist/${user.id}`)
+    apiFetch(`/api/wishlist/check/${game.id}`)
       .then(r => r.json())
       .then(data => {
-        const list = Array.isArray(data) ? data : (data.data || [])
-        setInWishlist(list.some(w => w.gameId === game.id))
+        setInWishlist(Boolean(data?.inWishlist))
       })
       .catch(() => {})
   }, [user, game])
 
-  // Load reviews
   useEffect(() => {
     if (!game) return
     fetch(`/api/reviews/game/${game.id}`)
