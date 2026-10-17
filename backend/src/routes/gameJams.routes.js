@@ -2,7 +2,6 @@ const express = require('express');
 const router = express.Router();
 const prisma = require('../lib/prisma');
 
-// GET /api/gamejams - Listar todas as Game Jams
 router.get('/', async (req, res) => {
   try {
     const gameJams = await prisma.gameJam.findMany({
@@ -16,7 +15,6 @@ router.get('/', async (req, res) => {
   }
 });
 
-// GET /api/gamejams/:id - Detalhes de uma Game Jam
 router.get('/:id', async (req, res) => {
   try {
     const gameJam = await prisma.gameJam.findUnique({
@@ -35,7 +33,6 @@ router.get('/:id', async (req, res) => {
   }
 });
 
-// POST /api/gamejams - Criar uma Game Jam
 router.post('/', async (req, res) => {
   const { title, description, theme, startDate, endDate, status, creatorId } = req.body;
   
@@ -61,7 +58,6 @@ router.post('/', async (req, res) => {
   }
 });
 
-// PUT /api/gamejams/:id - Editar uma Game Jam
 router.put('/:id', async (req, res) => {
   const { title, description, theme, startDate, endDate, status } = req.body;
   
@@ -83,7 +79,6 @@ router.put('/:id', async (req, res) => {
   }
 });
 
-// DELETE /api/gamejams/:id - Excluir uma Game Jam
 router.delete('/:id', async (req, res) => {
   try {
     await prisma.gameJam.delete({

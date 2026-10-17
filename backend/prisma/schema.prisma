@@ -117,6 +117,7 @@ model GameJam {
   entries     GameJamEntry[]
 
   @@index([creatorId])
+  @@index([createdAt])
 }
 
 model GameJamEntry {
