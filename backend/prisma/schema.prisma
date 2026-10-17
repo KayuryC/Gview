@@ -114,6 +114,8 @@ model GameJam {
 
   creator     User           @relation(fields: [creatorId], references: [id], onDelete: Cascade)
   entries     GameJamEntry[]
+
+  @@index([creatorId])
 }
 
 model GameJamEntry {
@@ -129,4 +131,5 @@ model GameJamEntry {
 
   @@unique([jamId, gameId])
   @@index([gameId])
+  @@index([developerId])
 }
